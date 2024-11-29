@@ -1,4 +1,3 @@
-// src/pages/LandingPage.js
 import React from 'react';
 import { 
   Box, 
@@ -43,64 +42,66 @@ const LandingPage = () => {
           zIndex={-1}
         >
           <Image 
-            src="/builder.jpg" 
+            src="/fierros1.avif" 
             alt="Hero Image"
             objectFit="cover"
             width="100%"
             height="100%"
+            filter="brightness(0.7)"  // Oscurecimiento adicional
           />
+          {/* Degradado oscuro translúcido */}
           <Box 
             position="absolute" 
             top={0} 
             left={0} 
             width="100%" 
             height="100%" 
-            bg="black" 
-            opacity={0.5}
+            background="linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%)"
           />
+{/* Círculo rojo translúcido con contratista */}
+<Box
+  position="absolute"
+  top="50%"
+  right="-10%"
+  transform="translate(-50%, -50%)"
+  width="500px"
+  height="500px"
+  borderRadius="50%"
+  bg="rgba(220, 20, 60, 0.3)"
+  filter="blur(100px)"
+  zIndex={2}  // Aumentado el z-index
+>
+</Box>
+
+
         </Box>
 
-        <VStack 
-          spacing={6}
-          justify="center" 
-          align="center" 
-          height="100%" 
-          color="white" 
-          textAlign="center"
-          position="relative"
-          zIndex={10}
-          px={4}
-        >
-          <Heading 
-            size="3xl" 
-            fontWeight="bold" 
-            textShadow="2px 2px 4px rgba(0,0,0,0.5)"
-          >
-            Transformando Espacios
-          </Heading>
-          <Text 
-            fontSize="xl" 
-            maxW="600px" 
-            textShadow="1px 1px 2px rgba(0,0,0,0.5)"
-          >
-            Soluciones innovadoras en construcción y diseño que hacen realidad tus proyectos
-          </Text>
-          <Button 
-            variant="outline"
-            colorScheme="white"
-            size="lg" 
-            mt={4}
-            borderWidth={2}
-            color="white"
-            _hover={{
-              bg: "rgba(255, 255, 255, 0.2)",
-              borderColor: "white"
-            }}
-          >
-            Comenzar Proyecto
-          </Button>
-        </VStack>
+      {/* Contenido Hero */}
+
+{/* Imagen del contratista */}
+<Box
+  position="absolute"
+  top={["70%", "70%", "35%"]}  // Más abajo en móvil, normal en desktop
+  right={["-100px", "-50px"]}  // Ajuste para móvil y desktop
+  transform={["translateY(0%)", "translateY(-11%)"]}  // Diferente transformación
+  width="auto"
+  height={["400px", "500px", "700px"]}  // Tamaño responsivo
+  zIndex={3}
+  overflow="visible"
+  display={["block", "block", "block"]}  // Asegura visibilidad en todos los tamaños
+>
+  <Image 
+    src="/hombres.png" 
+    alt="Contratista"
+    objectFit="contain"
+    maxWidth={["300px", "800px", "1500px"]}  // Ancho responsivo
+    width="auto"
+    height="100%"
+    filter="drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.3))"
+  />
+</Box>
       </Box>
+
 
       {/* Sección Servicios */}
       <Box 
