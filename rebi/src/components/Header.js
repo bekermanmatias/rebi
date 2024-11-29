@@ -56,7 +56,7 @@ const Header = () => {
               src="/logo.svg" 
               alt="Logo" 
               style={{ 
-                height: '40px', 
+                height: '50px', 
                 filter: 'brightness(0) invert(1)' 
               }} 
             />
