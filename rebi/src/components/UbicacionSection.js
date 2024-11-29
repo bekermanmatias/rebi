@@ -16,7 +16,7 @@ const UbicacionSection = () => {
     <Box 
       id="ubicacion" 
       bg="gray.100" 
-      py={16} 
+      py={30} 
       textAlign="center"
     >
       <Container maxW="container.xl">
@@ -46,7 +46,7 @@ const UbicacionSection = () => {
             p={10} 
             borderRadius="xl" 
             boxShadow="md"
-            maxW="600px"
+            maxW="1300px"
             w="full"
           >
             <Icon 
