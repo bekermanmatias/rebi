@@ -5,11 +5,12 @@ import {
   Image, 
   Text, 
   Heading, 
-  VStack, 
   Button,
   Flex,
   SimpleGrid,
-  Icon 
+  Icon,
+  keyframes,
+  useBreakpointValue
 } from '@chakra-ui/react';
 import { 
   FaHardHat, 
@@ -17,10 +18,26 @@ import {
   FaPaintRoller 
 } from 'react-icons/fa';
 import Header from '../components/Header';
+import BrandCarousel from '../components/BrandCarousel';
+import ProductosSection from '../components/ProductosSection';
 import UbicacionSection from '../components/UbicacionSection';
 import ContactoSection from '../components/ContactoSection';
+import Footer from '../components/Footer';
+import './LandingPage.css'; // Importa el archivo CSS
+
+const scrollAnimation = keyframes`
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+`;
+
+const bounce = keyframes`
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+`;
 
 const LandingPage = () => {
+  const animationDuration = useBreakpointValue({ base: '15s', md: '20s' });
+
   return (
     <Box position="relative" width="100%" overflowX="hidden">
       <Header />
@@ -42,152 +59,75 @@ const LandingPage = () => {
           zIndex={-1}
         >
           <Image 
-            src="/fierros1.avif" 
+            src="/techo.jpg" 
             alt="Hero Image"
             objectFit="cover"
             width="100%"
             height="100%"
-            filter="brightness(0.7)"  // Oscurecimiento adicional
+            filter="brightness(0.7)"
           />
           {/* Degradado oscuro translúcido */}
           <Box 
             position="absolute" 
             top={0} 
-            left={0} 
-            width="100%" 
+            left={0} width="100%" 
             height="100%" 
             background="linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%)"
           />
-{/* Círculo rojo translúcido con contratista */}
-<Box
-  position="absolute"
-  top="50%"
-  right="-10%"
-  transform="translate(-50%, -50%)"
-  width="500px"
-  height="500px"
-  borderRadius="50%"
-  bg="rgba(220, 20, 60, 0.3)"
-  filter="blur(100px)"
-  zIndex={2}  // Aumentado el z-index
->
-</Box>
-
-
+          
+          {/* Texto y botones */}
+          <Box className="hero-text">
+            <Heading as="h1" className="hero-heading">
+              Todo lo Necesario para Construir con Calidad
+            </Heading>
+            <Text className="hero-description">
+              Especializados en la distribución de las mejores marcas 
+            </Text>
+            <Flex justify="center" colorScheme="white" mt={4}>
+              <Button className="hero-button" mr={4}>
+                   Hablar con un Asesor
+              </Button>
+              <Button className="hero-button"  colorScheme="white">
+              Ver Productos
+              </Button>
+            </Flex>
+          </Box>
+          {/* Ícono de flecha centrado en la parte inferior */}
+          <Box
+            position="absolute"
+            bottom="5%"
+            left="50%"
+            transform="translateX(-50%)"
+            zIndex={4}
+          >
+            <Image 
+              src="/flecha3.svg" 
+              alt="Scroll Down" 
+              width={["40px", "50px", "60px"]}
+              height={["40px", "50px", "60px"]}
+              color="white"
+              filter="invert(1)"
+              cursor="pointer"
+              animation={`${bounce} 2s infinite`}
+              _hover={{
+                transform: "translateY(10px)",
+                transition: "transform 0.3s ease"
+              }}
+            />
+          </Box>
         </Box>
-
-      {/* Contenido Hero */}
-
-{/* Imagen del contratista */}
-<Box
-  position="absolute"
-  top={["70%", "70%", "35%"]}  // Más abajo en móvil, normal en desktop
-  right={["-100px", "-50px"]}  // Ajuste para móvil y desktop
-  transform={["translateY(0%)", "translateY(-11%)"]}  // Diferente transformación
-  width="auto"
-  height={["400px", "500px", "700px"]}  // Tamaño responsivo
-  zIndex={3}
-  overflow="visible"
-  display={["block", "block", "block"]}  // Asegura visibilidad en todos los tamaños
->
-  <Image 
-    src="/hombres.png" 
-    alt="Contratista"
-    objectFit="contain"
-    maxWidth={["300px", "800px", "1500px"]}  // Ancho responsivo
-    width="auto"
-    height="100%"
-    filter="drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.3))"
-  />
-</Box>
       </Box>
 
+      <BrandCarousel />
 
-      {/* Sección Servicios */}
-      <Box 
-        id="servicios" 
-        bg="gray.50" 
-        py={20} 
-        px={4}
-      >
-        <Container maxW="container.xl">
-          <Heading textAlign="center" mb={12}>Nuestros Servicios</Heading>
-          <SimpleGrid columns={[1, null, 3]} spacing={10}>
-            <Flex 
-              direction="column" 
-              align="center" 
-              textAlign="center" 
-              p={6} 
-              bg="white" 
-              borderRadius="md" 
-              boxShadow="md"
-            >
-              <Icon as={FaHardHat} w={12} h={12} color="red.500" mb={4} />
-              <Heading size="md" mb={4}>Construcción</Heading>
-              <Text>Servicios integrales de construcción profesional.</Text>
-            </Flex>
-            <Flex 
-              direction="column" 
-              align="center" 
-              textAlign="center" 
-              p={6} 
-              bg="white" 
-              borderRadius="md" 
-              boxShadow="md"
-            >
-              <Icon as={FaBuilding} w={12} h={12} color="blue.500" mb={4} />
-              <Heading size="md" mb={4}>Diseño</Heading>
-              <Text>Diseños innovadores y personalizados.</Text>
-            </Flex>
-            <Flex 
-              direction="column" 
-              align="center" 
-              textAlign="center" 
-              p={6} 
-              bg="white" 
-              borderRadius="md" 
-              boxShadow="md"
-            >
-              <Icon as={FaPaintRoller} w={12} h={12} color="green.500" mb={4} />
-              <Heading size="md" mb={4}>Remodelación</Heading>
-              <Text>Transformamos y renovamos tus espacios.</Text>
-            </Flex>
-          </SimpleGrid>
-        </Container>
-      </Box>
-      
+      <ProductosSection />
+
       <ContactoSection />
       
       <UbicacionSection />
     
-
-      {/* Footer */}
-      <Box 
-        id="contacto"
-        bg="red.600" 
-        color="white" 
-        py={12}
-      >
-        <Container maxW="container.xl">
-          <Flex 
-            direction={['column', null, 'row']} 
-            justify="space-between" 
-            align="center"
-          >
-            <Box mb={[6, null, 0]}>
-              <Heading size="md" mb={4}>Constructora Innovación</Heading>
-              <Text>Transformando sueños en realidad</Text>
-            </Box>
-            <Flex>
-              <Text mr={6}>Contacto: (555) 123-4567</Text>
-              <Text>Email: info@constructorainnovacion.com</Text>
-            </Flex>
-          </Flex>
-          <Text textAlign="center" mt={6} fontSize="sm">
-            © 2024 Constructora Innovación. Todos los derechos reservados.
-          </Text>
-        </Container>
-      </Box>
+      <Footer />
+      
     </Box>
   );
 };

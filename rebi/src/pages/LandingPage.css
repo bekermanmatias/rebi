@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif; /* Aplica Poppins como fuente principal */
+}
+
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  text-align: center;
+  color: white;
+  width: 65%;
+
+
+.hero-heading {
+  font-size: 4.5rem; /* Aumenta el tamaño del título */
+  letter-spacing: -0.03em; /* Aplica letter-spacing de -3% */
+  font-weight: 500;
+  margin-bottom: 1rem;
+
+}
+
+.hero-description {
+  font-size: 1.25rem; /* Ajusta el tamaño según sea necesario */
+  margin-bottom: 1.5rem;
+}
+}
+.hero-button {
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  width: 200px; /* Establece un ancho fijo */
+  height: 50px; /* Establece una altura fija si es necesario */
+}
+
+.hero-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: black; /* Cambia el color del texto al pasar el mouse */
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+  .hero-text {
+    width: 80%; /* Aumenta el ancho para pantallas más pequeñas */
+  
+
+  .hero-heading {
+    font-size: 3rem; /* Reduce el tamaño del título */
+  }
+
+  .hero-description {
+    font-size: 1rem; /* Reduce el tamaño de la descripción */
+  }
+
+  .hero-button {
+    width: 100%; /* Hacer que los botones ocupen el 100% del ancho en pantallas pequeñas */
+    height: 45px; /* Ajusta la altura si es necesario */
+    margin-bottom: 1rem; /* Espacio entre botones */
+  }
+}
+}
+
+@media (max-width: 480px) {
+  .hero-heading {
+    font-size: 1rem; /* Reduce aún más el tamaño del título para móviles */
+  
+
+  .hero-description {
+    font-size: 0.5rem; /* Reduce aún más el tamaño de la descripción para móviles */
+  }
+
+  .hero-button {
+    height: 40px; /* Ajusta la altura para móviles */
+  }
+}
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Box, 
   Flex, 
@@ -31,45 +31,28 @@ const Header = () => {
     isOpen: isProductosOpen, 
     onToggle: onProductosToggle 
   } = useDisclosure();
-  
-  const [scrollOpacity, setScrollOpacity] = useState(0);
-  const [logoSize, setLogoSize] = useState(500);
-  const [logoPosition, setLogoPosition] = useState('absolute');
 
-  // Determinar si es móvil
+  const [isVisible, setIsVisible] = useState(false);
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const maxScroll = 500;
-      
-      const opacity = Math.min(scrollPosition / maxScroll, 1);
-      setScrollOpacity(opacity);
-  
-      const initialSize = isMobile ? 250 : 500;  // Tamaño inicial más pequeño en móvil
-      const finalSize = 40;
-      const newSize = Math.max(finalSize, initialSize - (scrollPosition * (initialSize - finalSize) / maxScroll));
-      setLogoSize(newSize);
-  
-      setLogoPosition(scrollPosition > 250 ? 'relative' : 'absolute');
+      if (window.scrollY > 50) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
     };
-  
+
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isMobile]);  // Agrega isMobile como dependencia
+  }, []);
 
-  const scrollSettings = {
-    smooth: true,
-    duration: 500,
-    offset: -80
-  };
-  // Componente de menú para escritorio
   const DesktopMenu = () => (
-    <Flex align="center" justify="center" flexGrow={1}>
-      <ScrollLink to="nosotros" {...scrollSettings}>
+    <Flex align="center" justify="flex-end" flexGrow={1}>
+      <ScrollLink to="nosotros">
         <Text 
           fontSize="lg"
           fontWeight="medium"
@@ -104,7 +87,18 @@ const Header = () => {
         </MenuList>
       </Menu>
       
-      <ScrollLink to="contacto" {...scrollSettings}>
+      <Text 
+        fontSize="lg"
+        fontWeight="medium"
+        color="white" 
+        mx={4} 
+        cursor="pointer" 
+        _hover={{ color: 'red.100' }}
+      >
+        Ubicación
+      </Text>
+
+      <ScrollLink to="contacto">
         <Text 
           fontSize="lg"
           fontWeight="medium"
@@ -116,20 +110,9 @@ const Header = () => {
           Contacto
         </Text>
       </ScrollLink>
-      <Text 
-        fontSize="lg"
-        fontWeight="medium"
-        color="white" 
-        mx={4} 
-        cursor="pointer" 
-        _hover={{ color: 'red.100' }}
-      >
-        Ubicación
-      </Text>
     </Flex>
   );
 
-  // Componente de menú móvil
   const MobileMenu = () => (
     <Drawer isOpen={isMenuOpen} placement="right" onClose={onMenuClose}>
       <DrawerOverlay />
@@ -138,7 +121,7 @@ const Header = () => {
         <DrawerHeader>Menú</DrawerHeader>
         <DrawerBody>
           <VStack align="stretch" spacing={4}>
-            <ScrollLink to="nosotros" {...scrollSettings} onClick={onMenuClose}>
+            <ScrollLink to="nosotros" onClick={onMenuClose}>
               <Text fontWeight="medium">Nosotros</Text>
             </ScrollLink>
             
@@ -159,17 +142,17 @@ const Header = () => {
                 <VStack align="stretch" mt={2} pl={4} spacing={2}>
                   <Text>Construcción Residencial</Text>
                   <Text>Proyectos Comerciales</Text>
-                  <Text>Remodelaciones Integrales</Text>
+ <Text>Remodelaciones Integrales</Text>
                   <Text>Diseño de Interiores</Text>
                 </VStack>
               )}
             </Box>
             
-            <ScrollLink to="contacto" {...scrollSettings} onClick={onMenuClose}>
+            <Text fontWeight="medium">Ubicación</Text>
+
+            <ScrollLink to="contacto" onClick={onMenuClose}>
               <Text fontWeight="medium">Contacto</Text>
             </ScrollLink>
-            
-            <Text fontWeight="medium">Ubicación</Text>
           </VStack>
         </DrawerBody>
       </DrawerContent>
@@ -178,43 +161,15 @@ const Header = () => {
 
   return (
     <>
- {/* Logo grande inicial */}
-{logoPosition === 'absolute' && (
-  <Box
-    position="absolute"
-    top="150px"
-    left={["5%", "10%"]}
-    zIndex={1001}
-    transition="all 0.5s ease"
-    width={[`${logoSize * 0.5}px`, `${logoSize * 0.7}px`, `${logoSize}px`]}  // Tamaño responsivo
-    height={[`${logoSize * 0.5}px`, `${logoSize * 0.7}px`, `${logoSize}px`]}  // Tamaño responsivo
-  >
-    <ScrollLink to="inicio" {...scrollSettings} style={{ cursor: 'pointer' }}>
-      <img 
-        src="/logo.svg" 
-        alt="Logo" 
-        style={{ 
-          width: '100%', 
-          height: '100%',
-          filter: 'brightness(0) invert(1)',
-          objectFit: 'contain' 
-        }} 
-      />
-    </ScrollLink>
-  </Box>
-)}
-
-      {/* Header */}
       <Box 
         position="fixed" 
         top={0} 
         left={0} 
         right={0} 
         zIndex={1000} 
-        bg={`rgba(220, 20, 60, ${scrollOpacity * 0.7})`}
-        backdropFilter={`blur(${scrollOpacity * 10}px)`}
-        transition="all 0.5s ease"
-        height="80px"  // Altura fija
+        bg={isVisible ? "rgba(220, 20, 60, 0.9)" : "transparent"}
+        transition="background-color 0.5s ease"
+        height="80px"
         display="flex"
         alignItems="center"
         px={6}
@@ -226,21 +181,17 @@ const Header = () => {
           mx="auto"
           width="100%"
         >
-          {/* Logo en header */}
-          {logoPosition === 'relative' && (
-            <ScrollLink to="inicio" {...scrollSettings} style={{ cursor: 'pointer' }}>
-              <img 
-                src="/logo.svg" 
-                alt="Logo" 
-                style={{ 
-                  height: '50px', 
-                  filter: 'brightness(0) invert(1)' 
-                }} 
-              />
-            </ScrollLink>
-          )}
+          <ScrollLink to="inicio" style={{ cursor: 'pointer' }}>
+            <img 
+              src="/logo.svg" 
+              alt="Logo" 
+              style={{ 
+                height: '70px', // Aumentado el tamaño del logo
+                filter: 'brightness(0) invert(1)' 
+              }} 
+            />
+          </ScrollLink>
 
-          {/* Menú móvil o desktop */}
           {isMobile ? (
             <IconButton 
               icon={<HamburgerIcon />} 
@@ -248,7 +199,7 @@ const Header = () => {
               colorScheme="whiteAlpha" 
               onClick={onMenuOpen} 
               aria-label="Open Menu"
-              ml="auto"  // Alinea el botón a la derecha
+              ml="auto"
             />
           ) : (
             <DesktopMenu />
@@ -256,7 +207,6 @@ const Header = () => {
         </Flex>
       </Box>
 
-      {/* Menú móvil */}
       {isMobile && <MobileMenu />}
     </>
   );
